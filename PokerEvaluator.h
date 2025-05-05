@@ -19,10 +19,16 @@ public:
     void playAndDisplay();
 
     //make private after testing
-    bool isStraight(std::vector<Card>& hand);
-    bool isFlush(std::vector<Card>& hand);
-    bool isStraightFlush(std::vector<Card>& hand);
     bool isRoyalFlush(std::vector<Card>& hand);
+    bool isStraightFlush(std::vector<Card>& hand);
+    bool fourOfAKind(std::vector<Card>& hand);
+    bool fullHouse(std::vector<Card>& hand);
+    bool isFlush(std::vector<Card>& hand);
+    bool isStraight(std::vector<Card>& hand);
+    bool threeOfAKind(std::vector<Card>& hand);
+    bool twoPair(std::vector<Card>& hand);
+    bool onePair(std::vector<Card>& hand);
+    int highCard(std::vector<Card>& hand);
 
 private:
     int numCardsPerHand;
