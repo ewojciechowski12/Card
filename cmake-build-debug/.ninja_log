@@ -1,0 +1,10 @@
+# ninja log v6
+101	1180	7681631567741488	CMakeFiles/Card.dir/Card.cpp.obj	ed261f5a6336ae31
+50	1175	7681669599855679	CMakeFiles/Card.dir/main.cpp.obj	c28f498d44f3f8e1
+61	1366	7681669599960736	CMakeFiles/Card.dir/Deck.cpp.obj	dec3e4d447f89521
+1366	1638	7681669613010667	Card.exe	2de7686b767bfacf
+125	1143	7681631567989434	CMakeFiles/Card.dir/HandOfCards.cpp.obj	8f56a249fc90b269
+10	795	7681743482345290	CMakeFiles/Card.dir/main.cpp.obj	c28f498d44f3f8e1
+19	933	7681743482443810	CMakeFiles/Card.dir/Deck.cpp.obj	dec3e4d447f89521
+27	1000	7681743482521740	CMakeFiles/Card.dir/PokerEvaluator.cpp.obj	608af538a278445f
+1000	1236	7681743492254882	Card.exe	1b28e5b2623d3660

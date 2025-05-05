@@ -1,0 +1,3 @@
+C:/Users/ethan/OneDrive/Documents/Principles Comp Sci 2/Card/cmake-build-debug/CMakeFiles/Card.dir
+C:/Users/ethan/OneDrive/Documents/Principles Comp Sci 2/Card/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/ethan/OneDrive/Documents/Principles Comp Sci 2/Card/cmake-build-debug/CMakeFiles/rebuild_cache.dir
