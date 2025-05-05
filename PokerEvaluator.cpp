@@ -147,3 +147,10 @@ bool PokerEvaluator::containsAll(vector<int>& vec, vector<int>& valuesToCheck) {
     return true;
 }
 
+bool PokerEvaluator::isStraightFlush(vector<Card>& hand) {
+    if(isFlush(hand) && isStraight(hand)) {
+        return true;
+    }
+    return false;
+}
+
