@@ -37,6 +37,7 @@ private:
     void sort(vector<int>& cardValues);
     void removeDuplicates(vector<int>& cardValues);
     bool containsAll(vector<int>& vec, vector<int>& valuesToCheck);
+    bool isSameSuit(vector<Card>& hand);
 };
 
 

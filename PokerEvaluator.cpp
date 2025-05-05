@@ -154,3 +154,16 @@ bool PokerEvaluator::isStraightFlush(vector<Card>& hand) {
     return false;
 }
 
+//Helper function to validate if all cards in a hand are of the same suit
+bool PokerEvaluator::isSameSuit(vector<Card>& hand) {
+    Card::Suit firstSuit = hand[0].getSuit();
+
+    for(Card card : hand) {
+        if(card.getSuit() != firstSuit) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
