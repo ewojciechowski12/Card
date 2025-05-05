@@ -66,6 +66,7 @@ void PokerEvaluator::evaluateHand(vector<Card>& hand) {
 
 }
 
+/*
 //Check for flush
 bool PokerEvaluator::isFlush(vector<Card>& userHand) {
     HandOfCards hand(userHand);
@@ -83,6 +84,7 @@ bool PokerEvaluator::isFlush(vector<Card>& userHand) {
 
     return false;
 }
+*/
 
 //Check for straight
 bool PokerEvaluator::isStraight(vector<Card>& userHand) {
@@ -148,7 +150,7 @@ bool PokerEvaluator::containsAll(vector<int>& vec, vector<int>& valuesToCheck) {
 }
 
 bool PokerEvaluator::isStraightFlush(vector<Card>& hand) {
-    if(isFlush(hand) && isStraight(hand)) {
+    if(isSameSuit(hand) && isStraight(hand)) {
         return true;
     }
     return false;
@@ -173,7 +175,27 @@ bool PokerEvaluator::isSameSuit(vector<Card>& hand) {
             return false;
         }
     }
-
     return true;
+}
+
+//Function to check for Four of a Kind
+bool PokerEvaluator::fourOfAKind(vector<Card>& hand) {
+    // check each possible card value
+    for (int value = 1; value <= 14; ++value) {
+        int numSameCards = 0;
+
+        for (Card card : hand) {
+            if (card.getValue() == value) {
+                numSameCards++;
+            }
+        }
+
+        // If any value appears 4 times, it's Four of a Kind
+        if (numSameCards == 4) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
