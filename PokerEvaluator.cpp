@@ -66,25 +66,12 @@ void PokerEvaluator::evaluateHand(vector<Card>& hand) {
 
 }
 
-/*
+
 //Check for flush
 bool PokerEvaluator::isFlush(vector<Card>& userHand) {
-    HandOfCards hand(userHand);
-    int handSize = userHand.size();
-
-    int numClubs = hand.getNumberOfCardsBySuit(Card::CLUBS);
-    int numDiamonds = hand.getNumberOfCardsBySuit(Card::DIAMONDS);
-    int numHearts = hand.getNumberOfCardsBySuit(Card::HEARTS);
-    int numSpades = hand.getNumberOfCardsBySuit(Card::SPADES);
-
-    if (numClubs == handSize) return true;
-    if (numDiamonds == handSize) return true;
-    if (numHearts == handSize) return true;
-    if (numSpades == handSize) return true;
-
-    return false;
+    return isSameSuit(userHand);
 }
-*/
+
 
 //Check for straight
 bool PokerEvaluator::isStraight(vector<Card>& userHand) {
@@ -181,7 +168,7 @@ bool PokerEvaluator::isSameSuit(vector<Card>& hand) {
 //Function to check for Four of a Kind
 bool PokerEvaluator::fourOfAKind(vector<Card>& hand) {
     // check each possible card value
-    for (int value = 1; value <= 14; ++value) {
+    for (int value = 1; value <= 14; value++) {
         int numSameCards = 0;
 
         for (Card card : hand) {
@@ -190,12 +177,86 @@ bool PokerEvaluator::fourOfAKind(vector<Card>& hand) {
             }
         }
 
-        // If any value appears 4 times, it's Four of a Kind
+        // If any value appears 4 times, 4 of a Kind
         if (numSameCards == 4) {
             return true;
         }
     }
-
     return false;
+}
+
+//Function to check for three of a kind
+bool PokerEvaluator::threeOfAKind(vector<Card>& hand) {
+    for (int value = 1; value <= 14; value++) {
+        int numSameCards = 0;
+
+        for(Card card : hand) {
+            if(card.getValue() == value) {
+                numSameCards++;
+            }
+        }
+
+        // If any value appears 3 times, 3 of a kind
+        if (numSameCards == 3) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//Function to check for a pair
+bool PokerEvaluator::onePair(vector<Card>& hand) {
+    for (int value = 1; value <= 14; value++) {
+        int numSameCards = 0;
+
+        for(Card card : hand) {
+            if(card.getValue() == value) {
+                numSameCards++;
+            }
+        }
+
+        // If any value appears 3 times, 3 of a kind
+        if (numSameCards == 2) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//Function to check for two pairs
+bool PokerEvaluator::twoPair(vector<Card>& hand) {
+    int pairCount = 0;
+
+    for (int value = 1; value <= 14; value++) {
+        int numSameCards = 0;
+
+        for(Card card : hand) {
+            if(card.getValue() == value) {
+                numSameCards++;
+            }
+        }
+
+        // If any value appears 3 times, 3 of a kind
+        if (numSameCards == 2) {
+            pairCount++;
+        }
+    }
+    return pairCount == 2;
+}
+
+//Function to check for fullHouse (one pair, three of a kind)
+bool PokerEvaluator::fullHouse(vector<Card>& hand) {
+    return threeOfAKind(hand) && onePair(hand);
+}
+
+//Function to find the highest value in a hand
+int PokerEvaluator::highCard(vector<Card>& hand) {
+    int value = 0;
+    for(Card card : hand) {
+        if(card.getValue() > value) {
+            value = card.getValue();
+        }
+    }
+    return value;
 }
 
