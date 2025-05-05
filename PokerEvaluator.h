@@ -22,6 +22,7 @@ public:
     bool isStraight(std::vector<Card>& hand);
     bool isFlush(std::vector<Card>& hand);
     bool isStraightFlush(std::vector<Card>& hand);
+    bool isRoyalFlush(std::vector<Card>& hand);
 
 private:
     int numCardsPerHand;
