@@ -20,7 +20,7 @@ int main()
     //Create a hand of cards and print
     cout << "\n\nMy Hand: " << endl;
     vector <Card> myHand;
-    if(deck.getCards(5, myHand) == true) {
+    if(deck.getCards(5, myHand)) {
         for(Card c : myHand) {
             c.printCard();
         }
@@ -37,6 +37,10 @@ int main()
     cout << "\n\nNumber of Diamonds: " << numDiamonds << endl;
     cout << "\n\nNumber of Hearts: " << numHearts << endl;
     cout << "\n\nNumber of Spades: " << numSpades << endl;
+
+    PokerEvaluator eval(5);
+    cout << "\n\n\n";
+    eval.playAndDisplay();
 
     return 0;
 }

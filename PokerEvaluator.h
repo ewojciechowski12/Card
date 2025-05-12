@@ -33,14 +33,16 @@ public:
 private:
     int numCardsPerHand;
     int numHandsToPlay;
+    int handRank;
+    int handHighCard;
     std::vector<Card> userDefinedCards;
 
     void evaluateHand(std::vector<Card>& hand);
+    void updateStatistics(int handRank);
+    std::vector<int> statistics;
     void displayResults();
 
-
-
-
+    // Helper Utility Functions
     void sort(vector<int>& cardValues);
     void removeDuplicates(vector<int>& cardValues);
     bool containsAll(vector<int>& vec, vector<int>& valuesToCheck);

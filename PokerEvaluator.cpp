@@ -16,6 +16,7 @@ PokerEvaluator::PokerEvaluator(int numCards) {
     } else {
         numCardsPerHand = numCards;
         numHandsToPlay = 100000;
+        statistics.resize(11, 0);
     }
 }
 
@@ -24,14 +25,15 @@ void PokerEvaluator::setNumberOfHandsToPlay(int hands) {
 }
 
 void PokerEvaluator::addCardToHand(int value, Card::Suit suit) {
+
     //Do not allow addition of cards to hand if hand size is 5
     if(numCardsPerHand == 5) {
-        std::cerr << "Cannot add cars to a 5-card hand." << std::endl;
+        std::cerr << "Cannot add card to a 5-card hand." << std::endl;
         return;
     }
     //Do not allow more than a 2 card addition to a hand (5 generated, 2 user defined)
     if(userDefinedCards.size() >= 2) {
-        std::cerr << "Cannot add more tha n2 user-defined cards to a 7-card hand" << std::endl;
+        std::cerr << "Cannot add more than 2 user-defined cards to a 7-card hand" << std::endl;
         return;
     }
 
@@ -40,29 +42,67 @@ void PokerEvaluator::addCardToHand(int value, Card::Suit suit) {
 }
 
 void PokerEvaluator::playAndDisplay() {
-    //Create Fresh Deck
-    Deck deck;
-    deck.shuffle();
+    for( int i=0; i<numHandsToPlay; i++ ) {
+        //Create Fresh Deck
+        Deck deck;
+        deck.shuffle();
 
-    //Draw Random cards from deck depending on how many are specified by user
-    int numRandomCards = numCardsPerHand - userDefinedCards.size();
-    vector<Card> hand;
-    deck.getCards(numRandomCards, hand);
+        //Draw Random cards from deck depending on how many are specified by user
+        int numRandomCards = numCardsPerHand - userDefinedCards.size();
+        vector<Card> hand;
+        deck.getCards(numRandomCards, hand);
 
-    //Combine random cards with user-defined cards
-    for(Card card : userDefinedCards) {
-        hand.push_back(card);
+        //Combine random cards with user-defined cards
+        for(Card card : userDefinedCards) {
+            hand.push_back(card);
+        }
+
+        //Evaluate hand
+        evaluateHand(hand);
+
+        //Update Statistics
+        updateStatistics(handRank);
     }
 
-    //Evaluate hand
-    evaluateHand(hand);
-
-    //Update Statistics
-
     //Display Results
+    displayResults();
 }
 
 void PokerEvaluator::evaluateHand(vector<Card>& hand) {
+    //Evaluate hand based on precedence :
+
+    // 1. Royal Flush
+    if(isRoyalFlush(hand)) { handRank = 1; }
+
+    // 2. Straight Flush
+    else if(isStraightFlush(hand)) { handRank = 2; }
+
+    // 3. Four of a Kind
+    else if(fourOfAKind(hand)){ handRank = 3; }
+
+    // 4. Full House
+    else if(fullHouse(hand)){ handRank = 4; }
+
+    // 5. Flush
+    else if(isFlush(hand)) { handRank = 5;}
+
+    // 6. Straight
+    else if(isStraight(hand)) { handRank = 6; }
+
+    // 7. Three of a Kind
+    else if(threeOfAKind(hand)) { handRank = 7; }
+
+    // 8. Two Pair
+    else if(twoPair(hand)){ handRank = 8; }
+
+    // 9. One Pair
+    else if(onePair(hand)){ handRank = 9; }
+
+    // 10. High Card
+    else {
+        handRank = 10;
+        handHighCard = highCard(hand);
+    }
 
 }
 
@@ -86,6 +126,9 @@ bool PokerEvaluator::isStraight(vector<Card>& userHand) {
 
     //remove duplicates from values using iterator instead of index
     removeDuplicates(values);
+
+    //check for values size
+    if(values.size() < 5) return false;
 
     //check standard straight
     for(int i =0; i < values.size() - 4; i++) {
@@ -258,5 +301,24 @@ int PokerEvaluator::highCard(vector<Card>& hand) {
         }
     }
     return value;
+}
+
+// Function to display results of statistics
+void PokerEvaluator::displayResults() {
+    vector<string> pokerHands = {" ", "Royal Flush", "Straight Flush", "Four of a Kind",
+    "Full House", "Flush", "Straight", "Three of a Kind",
+    "Two Pair", "Pair", "High Card"};
+    for(int i = 1; i < statistics.size(); i++) {
+        double percentage = (100.0 * statistics[i]) / numHandsToPlay;
+        cout << pokerHands[i] << " = " << percentage << "%" << endl;
+    }
+}
+
+// Function to update statistics
+void PokerEvaluator::updateStatistics(int handRank) {
+
+    //Vector for each hand you can have (1-10)
+    //2nd dimension to hold amount of occurrences
+    statistics[handRank]++;
 }
 
